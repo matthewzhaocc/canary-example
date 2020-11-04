@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: rollouts-canary
-        image: ghcr.io/matthewzhaocc/canary:1
+        image: ghcr.io/matthewzhaocc/canary:2
         imagePullPolicy: Always
         ports:
         - containerPort: 80
