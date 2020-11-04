@@ -1,0 +1,35 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
+metadata:
+  name: rollout-canary
+spec:
+  replicas: 1
+  revisionHistoryLimit: 2
+  selector:
+    matchLabels:
+      app: rollout-canary
+  template:
+    metadata:
+      labels:
+        app: rollout-canary
+    spec:
+      containers:
+      - name: rollouts-canary
+        image: argoproj/rollouts-demo:blue
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 80
+  strategy:
+    canary:
+        steps:
+            - setWeight: 10
+            - pause:
+                duration: 1m
+        canaryService: canarysvc
+        stableService: stablesvc
+        trafficRouting:
+            istio:
+                virtualService:
+                    name: rollout-vsvc
+                    routes:
+                        - primary
