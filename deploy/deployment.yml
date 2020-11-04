@@ -15,14 +15,14 @@ spec:
     spec:
       containers:
       - name: rollouts-canary
-        image: ghcr.io/matthewzhaocc/canary:v1
+        image: ghcr.io/matthewzhaocc/canary:1
         imagePullPolicy: Always
         ports:
         - containerPort: 80
   strategy:
     canary:
         steps:
-            - setWeight: 10
+            - setWeight: 100
             - pause:
                 duration: 1m
         canaryService: canarysvc
